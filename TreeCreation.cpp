@@ -49,11 +49,56 @@ class BinaryTree{
         
     }
     
+    void insert(int val){
+        TreeNode* newNode = new TreeNode(val);
+        if(!root){
+            root = newNode;
+            return
+        }
+        queue<TreeNode*> q;
+        q.push(root);
+        while(!q.empty()){
+            TreeNode* current = q.front();
+            q.pop();
+            if(current -> left){
+                q.push(current->left);
+            }else{
+                current -> left = newNode;
+                return;
+            }
+            
+            if(current -> right){
+                q.push(current->right);
+            }else{
+                current -> right = newNode;
+                return;
+            }
+        }
+    }
+    
     void inorder(TreeNode* root){
         if(root == nullptr) return;
         inorder(root->left);
         cout << root -> data << endl;
         inorder(root -> right);
+    }
+    
+    void levelorder(TreeNode* root){
+        if(!root) return;
+        queue<TreeNode*> q;
+        q.push(root);
+        while(!q.empty()){
+            TreeNode* current = q.front();
+            q.pop();
+            cout << current -> data <<" ";
+            if(current->left) q.push(current->left);
+            if(current->right) q.push(current -> right);
+        }
+        
+    }
+    
+    void printlevelorder(){
+        levelorder(root);
     }
     
 };
@@ -63,5 +108,6 @@ int main(){
     tree1.buildTree();
     BinaryTree tree2;
     tree2.buildTree();
+    tree2.printlevelorder();
     
 }
